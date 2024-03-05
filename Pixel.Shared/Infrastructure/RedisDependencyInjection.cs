@@ -5,9 +5,9 @@ using StackExchange.Redis;
 
 namespace Pixel.Shared.Infrastructure;
 
-public static class DependencyInjection
+public static class RedisDependencyInjection
 {
-    public static void AddInfrastructureDependencies(
+    public static void AddRedisDependencies(
         this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<RedisOptions>(

@@ -7,7 +7,7 @@ using Pixel.Shared.Contracts;
 using Pixel.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddInfrastructureDependencies(builder.Configuration);
+builder.Services.AddRedisDependencies(builder.Configuration);
 builder.Services.AddTransient<RedisPublisher>();
 var app = builder.Build();
 
