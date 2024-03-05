@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel", "Pixel\Pixel.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelStorage", "PixelStorage\PixelStorage.csproj", "{14208BE4-4358-4AB3-8256-518B342B591D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel.Shared", "Pixel.Shared\Pixel.Shared.csproj", "{D66D682F-D10B-426D-B40A-58D43FD631E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel.LoadTests", "Pixel.LoadTests\Pixel.LoadTests.csproj", "{A037A266-53B2-4197-AAB3-89D4C544EF28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{14208BE4-4358-4AB3-8256-518B342B591D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14208BE4-4358-4AB3-8256-518B342B591D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14208BE4-4358-4AB3-8256-518B342B591D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D66D682F-D10B-426D-B40A-58D43FD631E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D66D682F-D10B-426D-B40A-58D43FD631E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D66D682F-D10B-426D-B40A-58D43FD631E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D66D682F-D10B-426D-B40A-58D43FD631E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A037A266-53B2-4197-AAB3-89D4C544EF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A037A266-53B2-4197-AAB3-89D4C544EF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A037A266-53B2-4197-AAB3-89D4C544EF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A037A266-53B2-4197-AAB3-89D4C544EF28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
