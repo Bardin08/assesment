@@ -6,7 +6,7 @@ var scenario = Scenario.Create("pixel_request_scenario", async _ =>
         httpClient.DefaultRequestHeaders.Add("User-Agent", "load-tests-agent");
         httpClient.DefaultRequestHeaders.Add("Referer",
             "https://nbomber.com/docs/getting-started/hello_world_tutorial/");
-        var response = await httpClient.GetAsync("http://localhost:5123/track");
+        var response = await httpClient.GetAsync("http://localhost:23748/track");
 
         return response.IsSuccessStatusCode ? Response.Ok() : Response.Fail();
     })
