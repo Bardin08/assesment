@@ -7,6 +7,11 @@ using Pixel.Shared.Contracts;
 using Pixel.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .AddEnvironmentVariables();
+
 builder.Services.AddRedisDependencies(builder.Configuration);
 builder.Services.AddTransient<RedisPublisher>();
 builder.Services.AddTransient<IpAddressProvider>();
@@ -20,7 +25,7 @@ app.MapGet("/track", async (HttpRequest request,
 {
     const string content = "R0lGODdhAQABAIEAAP///wAAAAAAAAAAACwAAAAAAQABAAAIBAABBAQAOw==";
     var redisConfiguration = redisOptions.Value;
-    
+
     var message = new TrackerRecord(
         DateTimeOffset.UtcNow,
         request.Headers[HeaderNames.UserAgent].FirstOrDefault(),

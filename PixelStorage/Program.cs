@@ -4,6 +4,10 @@ using PixelStorage.Infrastructure;
 var builder = WebApplication
     .CreateSlimBuilder();
 
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .AddEnvironmentVariables();
+
 builder.Services.AddRedisDependencies(builder.Configuration);
 builder.Services.AddHostedService<RedisConsumer>();
 
