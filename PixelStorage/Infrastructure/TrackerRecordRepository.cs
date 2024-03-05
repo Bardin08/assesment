@@ -2,18 +2,13 @@
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Pixel.Shared.Contracts;
-using Pixel.Shared.Infrastructure;
 using StackExchange.Redis;
 
 namespace PixelStorage.Infrastructure;
 
-public class RedisSubscriberService(
-    IConnectionMultiplexer redisConnection,
-    IOptions<RedisOptions> redisOptions,
-    IOptions<FileStorageOptions> fileStorageOptions)
-    : BackgroundService
+public class TrackerRecordRepository(
+    IOptions<FileStorageOptions> fileStorageOptions) : ITrackerRecordRepository
 {
-    private readonly RedisOptions _redisConfiguration = redisOptions.Value;
     private readonly StreamWriter _streamWriter = GetStreamWriter(fileStorageOptions);
     private readonly object _lockObject = new();
     private int _wroteRecords;
@@ -41,24 +36,7 @@ public class RedisSubscriberService(
             Encoding.UTF8, bufferSize);
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        // ReSharper disable once InconsistentlySynchronizedField
-        stoppingToken.Register(() => _streamWriter.Dispose());
-
-        var subscriber = redisConnection.GetSubscriber();
-        await subscriber.SubscribeAsync(
-            _redisConfiguration.TrackerRecordsChannel,
-            SaveTrackerRecord);
-
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            // Keep the service running
-            await Task.Delay(1000, stoppingToken);
-        }
-    }
-
-    private void SaveTrackerRecord(RedisChannel _, RedisValue message)
+    public void SaveTrackerRecord(RedisChannel _, RedisValue message)
     {
         if (!message.HasValue)
         {
@@ -84,7 +62,7 @@ public class RedisSubscriberService(
         }
     }
 
-    private static string? GetRecordLog(RedisValue message)
+    private string? GetRecordLog(RedisValue message)
     {
         var record = JsonSerializer.Deserialize<TrackerRecord>(message!);
         if (record is null)
@@ -110,9 +88,8 @@ public class RedisSubscriberService(
         return recordStr;
     }
 
-    public override void Dispose()
+    public void Dispose()
     {
-        base.Dispose();
         _streamWriter.Dispose();
     }
 }
