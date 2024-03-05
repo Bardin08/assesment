@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel", "Pixel\Pixel.csproj", "{CCAA3F30-F6EA-4749-A2E0-CBCB5143F73C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelStorage", "PixelStorage\PixelStorage.csproj", "{14208BE4-4358-4AB3-8256-518B342B591D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCAA3F30-F6EA-4749-A2E0-CBCB5143F73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCAA3F30-F6EA-4749-A2E0-CBCB5143F73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCAA3F30-F6EA-4749-A2E0-CBCB5143F73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCAA3F30-F6EA-4749-A2E0-CBCB5143F73C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14208BE4-4358-4AB3-8256-518B342B591D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14208BE4-4358-4AB3-8256-518B342B591D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14208BE4-4358-4AB3-8256-518B342B591D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14208BE4-4358-4AB3-8256-518B342B591D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
