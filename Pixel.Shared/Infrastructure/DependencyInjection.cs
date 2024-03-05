@@ -1,8 +1,10 @@
-﻿using StackExchange.Redis;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
-namespace PixelStorage.Infrastructure;
+namespace Pixel.Shared.Infrastructure;
 
-internal static class DependencyInjection
+public static class DependencyInjection
 {
     public static void AddInfrastructureDependencies(
         this IServiceCollection services, IConfiguration configuration)
@@ -17,5 +19,6 @@ internal static class DependencyInjection
         services.AddSingleton<IConnectionMultiplexer>(
             ConnectionMultiplexer.Connect(redisOptions.ConnectionString));
         services.AddHostedService<RedisSubscriberService>();
+        services.AddTransient<RedisPublisher>();
     }
 }

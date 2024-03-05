@@ -1,4 +1,4 @@
-﻿using PixelStorage.Infrastructure;
+﻿using Pixel.Shared.Infrastructure;
 
 var builder = WebApplication
     .CreateSlimBuilder();

@@ -1,0 +1,6 @@
+@Pixel_HostAddress = http://localhost:5123
+
+GET {{Pixel_HostAddress}}/track/
+Accept: application/json
+
+###

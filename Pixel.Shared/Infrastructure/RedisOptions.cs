@@ -1,4 +1,4 @@
-﻿namespace Pixel.Infrastructure;
+﻿namespace Pixel.Shared.Infrastructure;
 
 public class RedisOptions
 {

@@ -1,6 +1,7 @@
-﻿using StackExchange.Redis;
+﻿using Microsoft.Extensions.Hosting;
+using StackExchange.Redis;
 
-namespace PixelStorage.Infrastructure;
+namespace Pixel.Shared.Infrastructure;
 
 public class RedisSubscriberService(IConnectionMultiplexer redisConnection) : BackgroundService
 {

@@ -1,4 +1,4 @@
-﻿namespace PixelStorage.Contracts;
+﻿namespace Pixel.Shared.Contracts;
 
 public record TrackerRecord(
     DateTimeOffset Timestamp,

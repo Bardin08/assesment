@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace Pixel.Infrastructure;
+namespace Pixel.Shared.Infrastructure;
 
 public class RedisPublisher(IConnectionMultiplexer redisConnection)
 {

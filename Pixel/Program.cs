@@ -2,8 +2,8 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Pixel;
-using Pixel.Contracts;
-using Pixel.Infrastructure;
+using Pixel.Shared.Contracts;
+using Pixel.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructureDependencies(builder.Configuration);
