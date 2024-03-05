@@ -12,7 +12,6 @@ public class TrackerRecordRepository(
 {
     private readonly StreamWriter _streamWriter = GetStreamWriter(fileStorageOptions);
     private readonly object _lockObject = new();
-    private int _wroteRecords;
 
     private static StreamWriter GetStreamWriter(IOptions<FileStorageOptions> fileStorageOptions)
     {
@@ -65,13 +64,6 @@ public class TrackerRecordRepository(
         lock (_lockObject)
         {
             _streamWriter.WriteLine(recordStr);
-            Interlocked.Add(ref _wroteRecords, 1);
-
-            if (_wroteRecords > 1000)
-            {
-                _streamWriter.Flush();
-                Interlocked.Exchange(ref _wroteRecords, 0);
-            }
         }
     }
 
