@@ -1,0 +1,23 @@
+﻿version: '3.9'
+services:
+  pixel:
+    build:
+      context: .
+      dockerfile: ./Pixel.Dockerfile
+    ports:
+      - '23748:8080'
+    links:
+      -  pixel-redis
+
+  pixel-storage:
+    build:
+      context: .
+      dockerfile: PixelStorage.Dockerfile
+    links:
+      - pixel-redis
+
+  pixel-redis:
+    image: redis
+    container_name: pixel-redis
+    ports:
+      - '6379:6379'
