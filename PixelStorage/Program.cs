@@ -12,7 +12,7 @@ builder.Services.Configure<FileStorageOptions>(
     {
         o.ErrorOnUnknownConfiguration = true;
     });
-builder.Services.AddSingleton<ITrackerRecordRepository, TrackerRecordRepository>();
+builder.Services.AddSingleton<TrackerRecordRepository>();
 
 var app = builder.Build();
 

@@ -7,7 +7,8 @@ using StackExchange.Redis;
 namespace PixelStorage.Infrastructure;
 
 public class TrackerRecordRepository(
-    IOptions<FileStorageOptions> fileStorageOptions) : ITrackerRecordRepository
+    IOptions<FileStorageOptions> fileStorageOptions,
+    ILogger<TrackerRecordRepository> logger) : IDisposable
 {
     private readonly StreamWriter _streamWriter = GetStreamWriter(fileStorageOptions);
     private readonly object _lockObject = new();
@@ -37,6 +38,18 @@ public class TrackerRecordRepository(
     }
 
     public void SaveTrackerRecord(RedisChannel _, RedisValue message)
+    {
+        try
+        {
+            SaveTrackerRecordInternal(message);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Exception occured while saving the record");
+        }
+    }
+
+    private void SaveTrackerRecordInternal(RedisValue message)
     {
         if (!message.HasValue)
         {

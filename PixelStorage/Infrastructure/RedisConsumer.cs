@@ -7,25 +7,39 @@ namespace PixelStorage.Infrastructure;
 public class RedisConsumer(
     IConnectionMultiplexer redisConnection,
     IOptions<RedisOptions> redisOptions, 
-    ITrackerRecordRepository recordRepository)
+    TrackerRecordRepository recordRepository,
+    ILogger<RedisConsumer> logger)
     : BackgroundService
 {
     private readonly RedisOptions _redisConfiguration = redisOptions.Value;
+    private int exceptionsCount = 0;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // ReSharper disable once InconsistentlySynchronizedField
-        stoppingToken.Register(recordRepository.Dispose);
-
-        var subscriber = redisConnection.GetSubscriber();
-        await subscriber.SubscribeAsync(
-            _redisConfiguration.TrackerRecordsChannel,
-            recordRepository.SaveTrackerRecord);
-
-        while (!stoppingToken.IsCancellationRequested)
+        try
         {
-            // Keep the service running
-            await Task.Delay(1000, stoppingToken);
+            stoppingToken.Register(recordRepository.Dispose);
+
+            var subscriber = redisConnection.GetSubscriber();
+            await subscriber.SubscribeAsync(
+                _redisConfiguration.TrackerRecordsChannel,
+                recordRepository.SaveTrackerRecord);
+
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                // Keep the service running
+                await Task.Delay(1000, stoppingToken);
+            }
+        }
+        catch (Exception e)
+        {
+            exceptionsCount++;
+            logger.LogError(e, "Exception occured in Redis Consumer");
+
+            if (exceptionsCount > 10)
+            {
+                throw;
+            }
         }
     }
 }
