@@ -49,7 +49,7 @@ public class RedisSubscriberService(
         var subscriber = redisConnection.GetSubscriber();
         await subscriber.SubscribeAsync(
             _redisConfiguration.TrackerRecordsChannel,
-            async (c, m) => await SaveTrackerRecordAsync(c, m));
+            SaveTrackerRecord);
 
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -58,33 +58,18 @@ public class RedisSubscriberService(
         }
     }
 
-    private async Task SaveTrackerRecordAsync(RedisChannel _, RedisValue message)
+    private void SaveTrackerRecord(RedisChannel _, RedisValue message)
     {
         if (!message.HasValue)
         {
             return;
         }
 
-        var record = JsonSerializer.Deserialize<TrackerRecord>(message!);
-        if (record is null)
+        var recordStr = GetRecordLog(message);
+        if (string.IsNullOrEmpty(recordStr))
         {
             return;
         }
-        else if (string.IsNullOrEmpty(record.IpAddress))
-        {
-            // no need to save records without IP_Address,
-            // according to the requirements it's the only mandatory field. 
-            return;
-        }
-
-        var recordStr = string.Join("|",
-            [
-                record.Timestamp.ToString("O"),
-                record.Referer ?? "null",
-                record.UserAgent ?? "null",
-                record.IpAddress
-            ]
-        );
 
         lock (_lockObject)
         {
@@ -99,9 +84,35 @@ public class RedisSubscriberService(
         }
     }
 
+    private static string? GetRecordLog(RedisValue message)
+    {
+        var record = JsonSerializer.Deserialize<TrackerRecord>(message!);
+        if (record is null)
+        {
+            return null;
+        }
+
+        if (string.IsNullOrEmpty(record.IpAddress))
+        {
+            // no need to save records without IP_Address,
+            // according to the requirements it's the only mandatory field. 
+            return null;
+        }
+
+        var recordStr = string.Join("|",
+            [
+                record.Timestamp.ToString("O"),
+                record.Referer ?? "null",
+                record.UserAgent ?? "null",
+                record.IpAddress
+            ]
+        );
+        return recordStr;
+    }
+
     public override void Dispose()
     {
         base.Dispose();
-        _streamWriter?.Dispose();
+        _streamWriter.Dispose();
     }
 }
