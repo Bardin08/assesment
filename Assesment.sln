@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel.Shared", "Pixel.Share
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel.LoadTests", "Pixel.LoadTests\Pixel.LoadTests.csproj", "{A037A266-53B2-4197-AAB3-89D4C544EF28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixel.Tests", "Pixel.Tests\Pixel.Tests.csproj", "{57E82187-3576-4DDB-899D-378046756764}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{A037A266-53B2-4197-AAB3-89D4C544EF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A037A266-53B2-4197-AAB3-89D4C544EF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A037A266-53B2-4197-AAB3-89D4C544EF28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E82187-3576-4DDB-899D-378046756764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E82187-3576-4DDB-899D-378046756764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E82187-3576-4DDB-899D-378046756764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E82187-3576-4DDB-899D-378046756764}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

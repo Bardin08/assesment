@@ -9,11 +9,14 @@ using Pixel.Shared.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRedisDependencies(builder.Configuration);
 builder.Services.AddTransient<RedisPublisher>();
+builder.Services.AddTransient<IpAddressProvider>();
+
 var app = builder.Build();
 
 app.MapGet("/track", async (HttpRequest request,
-    [FromServices] RedisPublisher publisher,
-    [FromServices] IOptions<RedisOptions> redisOptions) =>
+    [FromServices] IpAddressProvider ipAddressProvider,
+    [FromServices] IOptions<RedisOptions> redisOptions,
+    [FromServices] RedisPublisher publisher) =>
 {
     const string content = "R0lGODdhAQABAIEAAP///wAAAAAAAAAAACwAAAAAAQABAAAIBAABBAQAOw==";
     var redisConfiguration = redisOptions.Value;
@@ -22,7 +25,7 @@ app.MapGet("/track", async (HttpRequest request,
         DateTimeOffset.UtcNow,
         request.Headers[HeaderNames.UserAgent].FirstOrDefault(),
         request.Headers[HeaderNames.Referer].FirstOrDefault(),
-        GetUserIp(request));
+        ipAddressProvider.GetUserIp(request));
 
     await publisher.PublishAsync(redisConfiguration.TrackerRecordsChannel,
         JsonSerializer.Serialize(message));
@@ -30,15 +33,3 @@ app.MapGet("/track", async (HttpRequest request,
 });
 
 app.Run();
-return;
-
-string GetUserIp(HttpRequest request)
-{
-    var requestIpAddress = request.Headers[HeaderNames.ForwardedFrom].FirstOrDefault();
-    if (string.IsNullOrEmpty(requestIpAddress))
-    {
-        requestIpAddress = request.HttpContext.Connection.RemoteIpAddress!.ToString();
-    }
-
-    return requestIpAddress;
-}
